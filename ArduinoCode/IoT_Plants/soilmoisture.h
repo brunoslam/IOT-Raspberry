@@ -16,6 +16,7 @@ class soilmoisture
 {
 public:
 	void read(int pin);
+	int value;
 	int percentage;
 };
 #endif

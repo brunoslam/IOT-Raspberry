@@ -4,6 +4,7 @@
 #define SLAVE_ADDRESS 0x40   // Define the i2c address
 #define DHT_PIN 4
 #define SOIL_PIN A0
+#define pRESISTOR_PIN A1
 
 dht11      DHT;
 soilmoisture  Moisture;
@@ -13,12 +14,13 @@ bool      DataReceived;
 
 void setup()
 {
-  
+  pinMode(pRESISTOR_PIN, INPUT);
   Wire.begin(SLAVE_ADDRESS);
   Wire.onReceive(receiveData);
   Wire.onRequest(sendData);
   Serial.begin(9600);
   DataReceived = false;
+  
 }
 
 void HandleSetPinState()
@@ -30,11 +32,13 @@ void HandleSetPinState()
 void loop()
 {
   delay(1000);
+  int pResistorValue = analogRead(pRESISTOR_PIN);
   DHT.read(DHT_PIN);
   Moisture.read(SOIL_PIN);
-  Serial.println((byte)DHT.humidity );
-  Serial.println((byte)DHT.temperature);
-  Serial.println(Moisture.percentage);
+  /*Serial.println(DHT.humidity );
+  Serial.println(DHT.temperature);
+  Serial.println(Moisture.percentage);*/
+  Serial.println(pResistorValue);
   //Serial.println("____");
   /*if (DataReceived)
   {

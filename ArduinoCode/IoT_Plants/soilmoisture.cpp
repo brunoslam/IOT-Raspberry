@@ -8,6 +8,7 @@
 void soilmoisture::read(int pin)
 {
 	float val = 1023 - (int)analogRead(pin);
+	value = (int)analogRead(pin);
 	percentage = val / 1023 * 100;
 }
 
