@@ -1,5 +1,6 @@
 #include "dht11.h"
 #include "soilmoisture.h"
+#include "photoresistor.h"
 #include "Wire.h"
 #define SLAVE_ADDRESS 0x40   // Define the i2c address
 #define DHT_PIN 4
@@ -8,6 +9,7 @@
 
 dht11      DHT;
 soilmoisture  Moisture;
+photoresistor PhotoResistor;
 byte ReceivedData[14];
 char      Response[14];
 bool      DataReceived;
@@ -32,13 +34,14 @@ void HandleSetPinState()
 void loop()
 {
   delay(1000);
-  int pResistorValue = analogRead(pRESISTOR_PIN);
   DHT.read(DHT_PIN);
   Moisture.read(SOIL_PIN);
+  PhotoResistor.read(pRESISTOR_PIN);
   /*Serial.println(DHT.humidity );
   Serial.println(DHT.temperature);
   Serial.println(Moisture.percentage);*/
-  Serial.println(pResistorValue);
+  Serial.println(PhotoResistor.value);
+  Serial.println(PhotoResistor.percentage);
   //Serial.println("____");
   /*if (DataReceived)
   {
