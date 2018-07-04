@@ -1,32 +1,33 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Net.Http;
+using Windows.ApplicationModel.Background;
 using Windows.Devices.I2c;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
-// La plantilla de elemento Página en blanco está documentada en https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0xc0a
+// The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
 
-namespace SistemaRiegoIoT
+namespace IotBackground
 {
-    /// <summary>
-    /// Página vacía que se puede usar de forma independiente o a la que se puede navegar dentro de un objeto Frame.
-    /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed class StartupTask : IBackgroundTask
     {
-        private I2cDevice arduio; // Used to Connect to Arduino
-        private DispatcherTimer timer = new DispatcherTimer();
-        public MainPage()
+        public void Run(IBackgroundTaskInstance taskInstance)
         {
-            this.InitializeComponent();
+            // 
+            // TODO: Insert code to perform background work
+            //
+            // If you start any asynchronous methods here, prevent the task
+            // from closing prematurely by using BackgroundTaskDeferral as
+            // described in http://aka.ms/backgroundtaskdeferral
+            //
             this.Initialiasecom();
         }
-
+        private I2cDevice arduio; // Used to Connect to Arduino
+        private DispatcherTimer timer = new DispatcherTimer();
+        TimeTrigger hourlyTrigger = new TimeTrigger(60, false);
+        
 
         public async void Initialiasecom()
         {

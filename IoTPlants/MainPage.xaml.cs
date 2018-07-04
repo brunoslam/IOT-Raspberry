@@ -1,4 +1,9 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using Windows.Devices.I2c;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -10,12 +15,12 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// La plantilla de elemento Página en blanco está documentada en https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0xc0a
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace SistemaRiegoIoT
+namespace IoTPlants
 {
     /// <summary>
-    /// Página vacía que se puede usar de forma independiente o a la que se puede navegar dentro de un objeto Frame.
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
@@ -57,7 +62,14 @@ namespace SistemaRiegoIoT
 
         private void SendDataArduino(byte[] response)
         {
+            
+            int hum = (int)response[0];
             int temp = (int)response[1];
+            int humTierra = (int)response[2];
+
+            TxtHumedad.Text = hum.ToString();
+            TxtTemperatura.Text = temp.ToString();
+            TxtHumedadTierra.Text = humTierra.ToString();
             if (temp <= 18)
             {
                 arduio.Write(Encoding.ASCII.GetBytes("si"));
